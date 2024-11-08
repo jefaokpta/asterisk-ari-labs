@@ -9,7 +9,6 @@ const AST_USER = process.env.AST_USER
 const AST_PASS = process.env.AST_PASS
 
 const ari = require('ari-client');
-const util = require('util');
 
 ari.connect(AST_HOST, AST_USER, AST_PASS, clientLoaded);
 
@@ -62,10 +61,11 @@ function clientLoaded (err, client) {
 
         dialed.originate({
                 endpoint: 'PJSIP/101#1132931515@TWILLIO_JUPITER',
+                timeout: 30,
                 app: 'bridge-dial',
                 appArgs: 'dialed',
                 variables: {
-                    'PJSIP_HEADER(add,P-Asserted-Identity)': '100023'
+                    'PJSIP_HEADER(add,P-Asserted-Identity)': '100023',
                 }},
             function(err, dialed) {if (err) {throw err;}}
         );
